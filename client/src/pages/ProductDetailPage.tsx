@@ -4,6 +4,7 @@ import { catalogApi } from '@/features/catalog/catalogApi'
 import { useAuth } from '@/features/auth/AuthContext'
 import { useCart } from '@/features/cart/CartContext'
 import { Alert } from '@/components/ui/Alert'
+import { ReviewsSection } from '@/components/ReviewsSection'
 import type { Product } from '@/types'
 import { getFileUrl } from '@/utils/fileUrl'
 import { formatPrice, getDiscountPercent } from '@/utils/format'
@@ -70,6 +71,7 @@ export default function ProductDetailPage() {
   }
 
   return (
+    <>
     <div className="grid gap-8 lg:grid-cols-2">
       <div>
         <div className="aspect-square overflow-hidden rounded-xl border border-gray-200 bg-gray-100">
@@ -224,5 +226,14 @@ export default function ProductDetailPage() {
         )}
       </div>
     </div>
+    <div className="mt-10">
+      <ReviewsSection
+        productId={product._id}
+        onRatingChange={(avg, count) =>
+          setProduct((prev) => (prev ? { ...prev, averageRating: avg, ratingCount: count } : prev))
+        }
+      />
+    </div>
+    </>
   )
 }

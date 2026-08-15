@@ -108,6 +108,24 @@ export interface PaginatedProducts {
   totalPages: number
 }
 
+export interface Review {
+  _id: string
+  product: string
+  user: { _id: string; name: string; avatar?: string } | string
+  rating: number
+  comment?: string
+  createdAt: string
+}
+
+export interface PaginatedReviews {
+  reviews: Review[]
+  total: number
+  page: number
+  pages: number
+  averageRating: number
+  ratingCount: number
+}
+
 export type ProductSort =
   | 'newest'
   | 'oldest'
