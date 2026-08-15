@@ -45,7 +45,7 @@ npm run dev            # http://localhost:5173
 
 - Health: `GET http://localhost:5000/api/health`
 - Frontend orqali: `GET http://localhost:5173/api/health`
-- Testlar: `cd server && npm test` (111 test)
+- Testlar: `cd server && npm test` (116 test)
 
 ## Seed ma'lumotlar
 
@@ -173,6 +173,13 @@ npm run seed
 - `DELETE /api/wishlist` — butun ro'yxatni tozalash
 - Har bir ro'yxat bir foydalanuvchiga bog'langan (`user` unique), `items` array sifatida saqlanadi
 
+### Admin panel kengaytirish (Faza 14)
+- `GET /api/products/admin` — admin: barcha mahsulotlar (nofaol ham), `q`, `isActive`, `seller`, `page` filtrlari
+- `GET /api/stores/admin` — admin: barcha do'konlar (nofaol ham), egasi va `productCount` bilan
+- `PATCH /api/stores/:id/active` — admin: do'konni faol/nofaol qilish
+- `GET /api/orders` + `PATCH /api/orders/:id/status` — admin: buyurtmalar ro'yxati + holat yangilash
+- Client: AdminOrdersPage (holat filter + yangilash), AdminProductsPage (qidiruv, faol/nofaol, o'chirish), AdminStoresPage (qidiruv, faol/nofaol), nav + route'lar
+
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
@@ -188,12 +195,10 @@ npm run seed
 - [x] Faza 11 — Statistika (seller + admin dashboard, top mahsulotlar/sellerlar, oylik diagramma), 4 avtomatik test
 - [x] Faza 12 — Sharh va reytinglar (yulduzlar, sharhlar, o'rtacha reyting avto-hisoblash), 8 avtomatik test
 - [x] Faza 13 — Sevimlilar (wishlist: mahsulot kartasida yurak, sevimlilar sahifasi, nav badge), 6 avtomatik test
-- [ ] Faza 14 — Admin panel kengaytirish
-- [ ] Faza 8 — Order tizimi + email
-- [ ] Faza 9 — Store/Seller moduli
-- [ ] Faza 10 — Payout/komissiya
-- [ ] Faza 11 — Admin panel
-- [ ] Faza 12 — Socket.io live
-- [ ] Faza 13 — Premium feature'lar
-- [ ] Faza 14 — Xavfsizlik + optimizatsiya
-- [ ] Faza 15 — README + seed + deploy
+- [x] Faza 14 — Admin panel kengaytirish (buyurtmalar, mahsulotlar, do'konlar sahifalari), 5 avtomatik test
+
+Rejalashtirilgan:
+- [ ] Socket.io live (real-time bildirishnomalar, chat)
+- [ ] Premium feature'lar (u-bay type auction, reklama)
+- [ ] Xavfsizlik + optimizatsiya
+- [ ] README + seed + deploy

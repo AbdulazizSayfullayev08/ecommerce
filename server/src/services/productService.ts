@@ -32,6 +32,7 @@ export interface ListProductsQuery {
   page?: number;
   limit?: number;
   activeOnly?: boolean;
+  isActive?: 'true' | 'false';
 }
 
 const SORT_MAP: Record<string, Record<string, 1 | -1>> = {
@@ -267,6 +268,33 @@ export async function listSellerProducts(sellerId: string, query: ListProductsQu
     .skip((page - 1) * limit)
     .limit(limit)
     .populate('category', 'name slug');
+
+  return { products, total, page, limit, totalPages: Math.ceil(total / limit) };
+}
+
+export async function listAdminProducts(query: ListProductsQuery) {
+  const { q, seller, isActive, page = 1, limit = 20 } = query;
+  const filter: Record<string, unknown> = {};
+
+  if (isActive === 'true') filter.isActive = true;
+  if (isActive === 'false') filter.isActive = false;
+  if (seller) {
+    filter.seller = isValidObjectId(seller) ? seller : null;
+  }
+  if (q) {
+    filter.$or = [
+      { name: { $regex: q, $options: 'i' } },
+      { brand: { $regex: q, $options: 'i' } },
+    ];
+  }
+
+  const total = await Product.countDocuments(filter);
+  const products = await Product.find(filter)
+    .sort({ createdAt: -1 })
+    .skip((page - 1) * limit)
+    .limit(limit)
+    .populate('category', 'name slug')
+    .populate('seller', 'name avatar');
 
   return { products, total, page, limit, totalPages: Math.ceil(total / limit) };
 }

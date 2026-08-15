@@ -113,3 +113,42 @@ export async function setStoreImage(userId: string, field: 'logo' | 'banner', pa
   await store.save();
   return store;
 }
+
+export async function listAdminStores(query: StoreListQuery & { isActive?: string } = {}) {
+  const page = query.page ?? 1;
+  const limit = query.limit ?? 20;
+  const filter: Record<string, unknown> = {};
+  if (query.q) filter.name = { $regex: query.q, $options: 'i' };
+  if (query.isActive === 'true') filter.isActive = true;
+  if (query.isActive === 'false') filter.isActive = false;
+
+  const [stores, total] = await Promise.all([
+    Store.find(filter)
+      .populate('owner', 'name avatar email')
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit),
+    Store.countDocuments(filter),
+  ]);
+
+  const counts = await Product.aggregate([
+    { $match: { seller: { $in: stores.map((s) => s.owner._id) } } },
+    { $group: { _id: '$seller', count: { $sum: 1 } } },
+  ]);
+  const countMap = new Map(counts.map((c) => [c._id.toString(), c.count]));
+
+  const enriched = stores.map((s) => {
+    const obj = s.toObject();
+    return { ...obj, productCount: countMap.get(s.owner._id.toString()) ?? 0 };
+  });
+
+  return { stores: enriched, total, page, pages: Math.ceil(total / limit) };
+}
+
+export async function toggleStoreActive(storeId: string, isActive: boolean) {
+  const store = await Store.findById(storeId);
+  if (!store) throw new ApiError(404, 'Do\'kon topilmadi');
+  store.isActive = isActive;
+  await store.save();
+  return store;
+}

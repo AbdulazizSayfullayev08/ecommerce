@@ -39,4 +39,23 @@ export const catalogApi = {
     apiRequest<FeaturedResponse>(`/products/featured?limit=${limit}`),
 
   getProduct: (slug: string) => apiRequest<ProductResponse>(`/products/${slug}`),
+
+  listAdmin: (params?: { q?: string; isActive?: string; page?: number; limit?: number }) => {
+    const qs = new URLSearchParams()
+    if (params?.q) qs.set('q', params.q)
+    if (params?.isActive) qs.set('isActive', params.isActive)
+    if (params?.page) qs.set('page', String(params.page))
+    if (params?.limit) qs.set('limit', String(params.limit))
+    const query = qs.toString()
+    return apiRequest<ProductListResponse>(`/products/admin${query ? `?${query}` : ''}`)
+  },
+
+  setActive: (productId: string, isActive: boolean) =>
+    apiRequest<ProductResponse>(`/products/${productId}/active`, {
+      method: 'PATCH',
+      body: { isActive },
+    }),
+
+  remove: (productId: string) =>
+    apiRequest<ProductResponse>(`/products/${productId}`, { method: 'DELETE' }),
 }

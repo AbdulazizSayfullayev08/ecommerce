@@ -3,8 +3,10 @@ import {
   createStore,
   getMyStore,
   getStoreBySlug,
+  listAdminStores,
   listStores,
   setStoreImage,
+  toggleStoreActive,
   updateStore,
 } from '../services/storeService';
 
@@ -12,6 +14,24 @@ export async function listStoresController(req: Request, res: Response, next: Ne
   try {
     const data = await listStores(req.query);
     res.status(200).json({ success: true, data });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function adminStoresController(req: Request, res: Response, next: NextFunction) {
+  try {
+    const data = await listAdminStores(req.query);
+    res.status(200).json({ success: true, data });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function toggleStoreActiveController(req: Request, res: Response, next: NextFunction) {
+  try {
+    const store = await toggleStoreActive(req.params.id as string, req.body.isActive as boolean);
+    res.status(200).json({ success: true, data: { store } });
   } catch (err) {
     next(err);
   }

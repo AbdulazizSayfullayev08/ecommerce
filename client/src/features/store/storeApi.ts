@@ -64,4 +64,21 @@ export const storeApi = {
       isFormData: true,
     })
   },
+
+  listAdmin: (params?: { q?: string; isActive?: string; page?: number }) => {
+    const qs = new URLSearchParams()
+    if (params?.q) qs.set('q', params.q)
+    if (params?.isActive) qs.set('isActive', params.isActive)
+    if (params?.page) qs.set('page', String(params.page))
+    const query = qs.toString()
+    return apiRequest<{ stores: (Store & { productCount: number })[]; total: number; pages: number }>(
+      `/stores/admin${query ? `?${query}` : ''}`,
+    )
+  },
+
+  toggleActive: (storeId: string, isActive: boolean) =>
+    apiRequest<StoreResponse>(`/stores/${storeId}/active`, {
+      method: 'PATCH',
+      body: { isActive },
+    }),
 }

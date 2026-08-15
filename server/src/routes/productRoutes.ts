@@ -6,6 +6,7 @@ import { UserRole } from '../types';
 import {
   createProductController,
   deleteProductController,
+  getAdminProducts,
   getFeatured,
   getMyProducts,
   getProduct,
@@ -25,6 +26,7 @@ const router = Router();
 router.get('/', validate(listProductsQuerySchema, 'query'), getProducts);
 router.get('/featured', getFeatured);
 router.get('/mine', protect, authorize(UserRole.SELLER, UserRole.ADMIN), getMyProducts);
+router.get('/admin', protect, authorize(UserRole.ADMIN), getAdminProducts);
 
 router.post('/', protect, validate(productSchema), createProductController);
 

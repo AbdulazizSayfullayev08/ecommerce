@@ -19,4 +19,19 @@ export const orderApi = {
 
   getMine: (orderId: string) =>
     apiRequest<{ order: Order }>(`/orders/mine/${orderId}`),
+
+  listAdmin: (params?: { page?: number; status?: string; limit?: number }) => {
+    const qs = new URLSearchParams()
+    if (params?.page) qs.set('page', String(params.page))
+    if (params?.status) qs.set('status', params.status)
+    if (params?.limit) qs.set('limit', String(params.limit))
+    const query = qs.toString()
+    return apiRequest<OrdersResponse>(`/orders${query ? `?${query}` : ''}`)
+  },
+
+  updateStatus: (orderId: string, status: Order['status']) =>
+    apiRequest<{ order: Order }>(`/orders/${orderId}/status`, {
+      method: 'PATCH',
+      body: { status },
+    }),
 }

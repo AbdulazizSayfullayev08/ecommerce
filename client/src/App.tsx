@@ -21,6 +21,9 @@ import AccountPage from '@/pages/account/AccountPage'
 import AdminUsersPage from '@/pages/admin/AdminUsersPage'
 import AdminPayoutsPage from '@/pages/admin/AdminPayoutsPage'
 import AdminStatsPage from '@/pages/admin/AdminStatsPage'
+import AdminOrdersPage from '@/pages/admin/AdminOrdersPage'
+import AdminProductsPage from '@/pages/admin/AdminProductsPage'
+import AdminStoresPage from '@/pages/admin/AdminStoresPage'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
 import { PublicOnlyRoute } from '@/components/PublicOnlyRoute'
 import { UserRole } from '@/types'
@@ -134,6 +137,30 @@ export default function App() {
               element={
                 <ProtectedRoute roles={[UserRole.ADMIN]}>
                   <AdminStatsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="admin/orders"
+              element={
+                <ProtectedRoute roles={[UserRole.ADMIN]}>
+                  <AdminOrdersPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="admin/products"
+              element={
+                <ProtectedRoute roles={[UserRole.ADMIN]}>
+                  <AdminProductsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="admin/stores"
+              element={
+                <ProtectedRoute roles={[UserRole.ADMIN]}>
+                  <AdminStoresPage />
                 </ProtectedRoute>
               }
             />

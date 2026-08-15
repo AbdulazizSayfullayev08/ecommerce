@@ -95,6 +95,21 @@ export default function MainLayout() {
                   </Link>
                 )}
                 {user.role === 'admin' && (
+                  <Link to="/admin/orders" className="text-gray-600 hover:text-indigo-600">
+                    Buyurtmalar
+                  </Link>
+                )}
+                {user.role === 'admin' && (
+                  <Link to="/admin/products" className="text-gray-600 hover:text-indigo-600">
+                    Mahsulotlar
+                  </Link>
+                )}
+                {user.role === 'admin' && (
+                  <Link to="/admin/stores" className="text-gray-600 hover:text-indigo-600">
+                    Do'konlar
+                  </Link>
+                )}
+                {user.role === 'admin' && (
                   <Link to="/admin/stats" className="text-gray-600 hover:text-indigo-600">
                     Statistika
                   </Link>

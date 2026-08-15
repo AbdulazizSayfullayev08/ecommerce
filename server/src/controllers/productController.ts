@@ -5,6 +5,7 @@ import {
   deleteProduct,
   getFeaturedProducts,
   getProductBySlug,
+  listAdminProducts,
   listProducts,
   listSellerProducts,
   toggleProductActive,
@@ -41,6 +42,17 @@ export const getProduct = asyncHandler(async (req: Request, res: Response) => {
 
 export const getMyProducts = asyncHandler(async (req: Request, res: Response) => {
   const result = await listSellerProducts(req.user!.userId, {
+    page: req.query.page ? Number(req.query.page) : undefined,
+    limit: req.query.limit ? Number(req.query.limit) : undefined,
+  });
+  res.status(200).json({ success: true, data: result });
+});
+
+export const getAdminProducts = asyncHandler(async (req: Request, res: Response) => {
+  const result = await listAdminProducts({
+    q: req.query.q as string | undefined,
+    seller: req.query.seller as string | undefined,
+    isActive: req.query.isActive as 'true' | 'false' | undefined,
     page: req.query.page ? Number(req.query.page) : undefined,
     limit: req.query.limit ? Number(req.query.limit) : undefined,
   });
