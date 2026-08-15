@@ -45,7 +45,7 @@ npm run dev            # http://localhost:5173
 
 - Health: `GET http://localhost:5000/api/health`
 - Frontend orqali: `GET http://localhost:5173/api/health`
-- Testlar: `cd server && npm test` (78 test)
+- Testlar: `cd server && npm test` (85 test)
 
 ## Seed ma'lumotlar
 
@@ -134,6 +134,17 @@ npm run seed
 - `GET /api/orders/seller` — seller: o'z mahsulotlari kiritilgan buyurtmalar
 - Buyurtma tasdiqlash va holat o'zgarishi email orqali xabar qilinadi
 
+## API endpointlar (Faza 9)
+
+### Store/Seller
+- `GET /api/stores` — do'konlar ro'yxati (`q`, `page`, `limit`)
+- `GET /api/stores/:slug` — do'kon sahifasi (do'kon + uning mahsulotlari)
+- `GET /api/stores/mine` — seller: o'z do'koni
+- `POST /api/stores` — tasdiqlangan seller: do'kon yaratish (bitta seller — bitta do'kon)
+- `PUT /api/stores` — egasi: yangilash (nom avtomatik slug qiladi)
+- `POST /api/stores/logo`, `POST /api/stores/banner` — egasi: rasm yuklash
+- Admin seller'ni tasdiqlaganda (`PATCH /api/users/:id/approve`) avtomatik do'kon yaratiladi
+
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
@@ -144,7 +155,8 @@ npm run seed
 - [x] Faza 6 — Cart + kupon (server + client: savat sahifasi, miqdor, kupon maydoni, nav badge), 12 avtomatik test
 - [x] Faza 7 — Checkout + Stripe (COD buyurtma, Stripe Session + webhook, stock kamayishi, client checkout sahifasi), 9 avtomatik test
 - [x] Faza 8 — Order tizimi + email (buyurtmalarim, admin/seller ro'yxatlari, status + email bildirishnoma), 9 avtomatik test
-- [ ] Faza 9 — Store/Seller moduli
+- [x] Faza 9 — Store/Seller moduli (do'kon sahifasi, yaratish/tahrirlash, logo/banner, seller tasdiqlashda avto-do'kon), 7 avtomatik test
+- [ ] Faza 10 — Payout/komissiya
 - [ ] Faza 8 — Order tizimi + email
 - [ ] Faza 9 — Store/Seller moduli
 - [ ] Faza 10 — Payout/komissiya

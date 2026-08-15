@@ -181,3 +181,17 @@ export interface Order {
   total: number
   createdAt: string
 }
+
+export interface Store {
+  _id: string
+  name: string
+  slug: string
+  description: string
+  logo: string | null
+  banner: string | null
+  owner: { _id: string; name: string; avatar?: string } | string
+  phone: string
+  address: string
+  isActive: boolean
+  createdAt: string
+}

@@ -5,8 +5,9 @@ import { AddressesTab } from './tabs/AddressesTab'
 import { SecurityTab } from './tabs/SecurityTab'
 import { SellerTab } from './tabs/SellerTab'
 import { OrdersTab } from './tabs/OrdersTab'
+import { SellerStoreTab } from './tabs/SellerStoreTab'
 
-type Tab = 'profile' | 'addresses' | 'security' | 'seller' | 'orders'
+type Tab = 'profile' | 'addresses' | 'security' | 'seller' | 'orders' | 'store'
 
 const tabs: { id: Tab; label: string; adminOnly?: boolean; sellerOnly?: boolean }[] = [
   { id: 'profile', label: 'Profil' },
@@ -14,6 +15,7 @@ const tabs: { id: Tab; label: string; adminOnly?: boolean; sellerOnly?: boolean 
   { id: 'addresses', label: 'Manzillar' },
   { id: 'security', label: 'Xavfsizlik' },
   { id: 'seller', label: 'Seller bo\'lish' },
+  { id: 'store', label: 'Mening do\'konim', sellerOnly: true },
 ]
 
 export default function AccountPage() {
@@ -54,6 +56,7 @@ export default function AccountPage() {
           {active === 'addresses' && <AddressesTab />}
           {active === 'security' && <SecurityTab />}
           {active === 'seller' && <SellerTab />}
+          {active === 'store' && <SellerStoreTab />}
         </div>
       </div>
     </div>

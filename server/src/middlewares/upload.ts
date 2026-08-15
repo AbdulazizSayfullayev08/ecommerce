@@ -35,9 +35,11 @@ function createUploader(dir: string, maxCount?: number) {
 
   return {
     single: multerInstance.single('avatar'),
+    singleField: (field: string) => multerInstance.single(field),
     array: maxCount ? multerInstance.array('images', maxCount) : multerInstance.array('images'),
   };
 }
 
 export const avatarUpload = createUploader('avatars');
 export const productImageUpload = createUploader('products', 5);
+export const storeImageUpload = createUploader('stores');

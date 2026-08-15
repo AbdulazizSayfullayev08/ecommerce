@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import User, { UserAddress } from '../models/User';
+import Store from '../models/Store';
 import { ApiError } from '../utils/ApiError';
 import { env } from '../config/env';
 import { UserRole } from '../types';
@@ -257,5 +258,17 @@ export async function approveSeller(userId: string, isApproved: boolean) {
 
   user.isApproved = isApproved;
   await user.save();
+
+  if (isApproved && !user.storeId) {
+    const existing = await Store.findOne({ owner: user._id });
+    if (!existing) {
+      const store = await Store.create({
+        name: `${user.name} do'koni`,
+        owner: user._id,
+      });
+      user.storeId = store._id;
+      await user.save();
+    }
+  }
   return user;
 }

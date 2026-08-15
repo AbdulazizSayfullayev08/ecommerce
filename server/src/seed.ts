@@ -1,5 +1,6 @@
 import { connectDB, disconnectDB } from './config/db';
 import User from './models/User';
+import Store from './models/Store';
 import Category from './models/Category';
 import Product from './models/Product';
 import { UserRole } from './types';
@@ -91,6 +92,22 @@ async function seed(): Promise<void> {
   }
 
   const seller = await User.findOne({ email: 'seller@ecommerce.local' });
+
+  if (seller && !seller.storeId) {
+    const existing = await Store.findOne({ owner: seller._id });
+    if (!existing) {
+      const store = await Store.create({
+        name: 'Seller Demo Store',
+        description: 'Elektronika, kiyim va sport mahsulotlari',
+        owner: seller._id,
+        phone: '+998900000000',
+        address: 'Toshkent sh.',
+      });
+      seller.storeId = store._id;
+      await seller.save();
+      console.log(`[seed] Do'kon yaratildi: ${store.name} (/${store.slug})`);
+    }
+  }
 
   for (const data of seedCategories) {
     const existing = await Category.findOne({ name: data.name });
