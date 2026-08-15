@@ -4,11 +4,13 @@ import { ProfileTab } from './tabs/ProfileTab'
 import { AddressesTab } from './tabs/AddressesTab'
 import { SecurityTab } from './tabs/SecurityTab'
 import { SellerTab } from './tabs/SellerTab'
+import { OrdersTab } from './tabs/OrdersTab'
 
-type Tab = 'profile' | 'addresses' | 'security' | 'seller'
+type Tab = 'profile' | 'addresses' | 'security' | 'seller' | 'orders'
 
 const tabs: { id: Tab; label: string; adminOnly?: boolean; sellerOnly?: boolean }[] = [
   { id: 'profile', label: 'Profil' },
+  { id: 'orders', label: 'Buyurtmalarim' },
   { id: 'addresses', label: 'Manzillar' },
   { id: 'security', label: 'Xavfsizlik' },
   { id: 'seller', label: 'Seller bo\'lish' },
@@ -48,6 +50,7 @@ export default function AccountPage() {
 
         <div className="min-w-0 flex-1">
           {active === 'profile' && <ProfileTab />}
+          {active === 'orders' && <OrdersTab />}
           {active === 'addresses' && <AddressesTab />}
           {active === 'security' && <SecurityTab />}
           {active === 'seller' && <SellerTab />}

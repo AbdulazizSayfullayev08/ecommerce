@@ -14,6 +14,7 @@ import productRoutes from './routes/productRoutes';
 import cartRoutes from './routes/cartRoutes';
 import couponRoutes from './routes/couponRoutes';
 import checkoutRoutes from './routes/checkoutRoutes';
+import orderRoutes from './routes/orderRoutes';
 
 export function createApp(): Express {
   const app: Express = express();
@@ -44,6 +45,7 @@ export function createApp(): Express {
   app.use('/api/cart', cartRoutes);
   app.use('/api/coupons', couponRoutes);
   app.use('/api/checkout', checkoutRoutes);
+  app.use('/api/orders', orderRoutes);
 
   app.use(notFound);
   app.use(errorHandler);

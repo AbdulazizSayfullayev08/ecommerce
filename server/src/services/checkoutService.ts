@@ -6,6 +6,7 @@ import { env } from '../config/env';
 import { ApiError } from '../utils/ApiError';
 import { getCart } from './cartService';
 import { incrementCouponUsage } from './couponService';
+import { sendOrderConfirmationEmail } from './orderService';
 
 interface CartItemWithProduct {
   product: {
@@ -174,6 +175,8 @@ export async function createCodOrder(userId: string, addressId: string) {
   });
 
   await clearUserCart(userId, cart.couponCode);
+
+  void sendOrderConfirmationEmail(order).catch(() => undefined);
   return order;
 }
 
@@ -189,4 +192,6 @@ export async function handleCheckoutSessionCompleted(sessionId: string) {
   await order.save();
 
   await clearUserCart(order.user.toString(), order.couponCode);
+
+  void sendOrderConfirmationEmail(order).catch(() => undefined);
 }
