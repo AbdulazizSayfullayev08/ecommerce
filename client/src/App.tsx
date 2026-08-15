@@ -2,6 +2,8 @@ import { Route, Routes } from 'react-router-dom'
 import { AuthProvider } from '@/features/auth/AuthContext'
 import MainLayout from '@/layouts/MainLayout'
 import HomePage from '@/pages/HomePage'
+import ProductsPage from '@/pages/ProductsPage'
+import ProductDetailPage from '@/pages/ProductDetailPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import LoginPage from '@/pages/auth/LoginPage'
 import RegisterPage from '@/pages/auth/RegisterPage'
@@ -20,6 +22,8 @@ export default function App() {
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="products/:slug" element={<ProductDetailPage />} />
 
           <Route
             path="login"

@@ -4,6 +4,7 @@ import { getFileUrl } from '@/utils/fileUrl'
 
 const navItems = [
   { to: '/', label: 'Bosh sahifa' },
+  { to: '/products', label: 'Mahsulotlar' },
 ]
 
 export default function MainLayout() {

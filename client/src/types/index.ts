@@ -65,3 +65,62 @@ export interface PaginatedUsers {
   limit: number
   totalPages: number
 }
+
+export interface Category {
+  _id: string
+  name: string
+  slug: string
+  description?: string
+  image?: string
+  parent?: string | null
+  isActive: boolean
+  order: number
+  children?: Category[]
+}
+
+export interface Product {
+  _id: string
+  seller: { _id: string; name: string; avatar?: string } | string
+  category: { _id: string; name: string; slug: string } | string
+  name: string
+  slug: string
+  description?: string
+  brand?: string
+  price: number
+  compareAtPrice?: number
+  stock: number
+  sku?: string
+  images: string[]
+  attributes?: Record<string, string>
+  isActive: boolean
+  isFeatured: boolean
+  averageRating: number
+  ratingCount: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface PaginatedProducts {
+  products: Product[]
+  total: number
+  page: number
+  limit: number
+  totalPages: number
+}
+
+export type ProductSort =
+  | 'newest'
+  | 'oldest'
+  | 'price_asc'
+  | 'price_desc'
+  | 'rating'
+
+export interface ProductFilters {
+  q?: string
+  category?: string
+  minPrice?: number
+  maxPrice?: number
+  sort?: ProductSort
+  page?: number
+  limit?: number
+}
