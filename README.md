@@ -49,17 +49,23 @@ npm run dev            # http://localhost:5173
 
 ## Seed ma'lumotlar
 
-Demo foydalanuvchilarni yaratish uchun (admin/seller/customer):
+To'liq demo katalog (200 mahsulot, 10 kategoriya, 4 seller/do'kon) va demo foydalanuvchilarni yaratadi:
 
 ```bash
 cd server
-npm run seed
+npm run seed              # bo'sh bazaga to'ldiradi
+npm run seed -- --reset   # bazani tozalab qayta to'ldiradi
 ```
+
+Katalog: **200 mahsulot** × 10 kategoriya (Telefon va gadjetlar, Noutbuk va kompyuter, Erkaklar/ayollar kiyimi, Poyabzal, Sport, Go'zallik, Uy jihozlari, Kitoblar, Bolalar o'yinchoqlari). Har mahsulotda 3 ta demo rasm (picsum.photos), ayrimlarida chegirma (`compareAtPrice`) va featured belgisi. Mahsulotlar 4 seller'ga taqsimlangan, har birida do'koni bor.
 
 | Rol | Email | Parol |
 |---|---|---|
 | Admin | admin@ecommerce.local | Admin12345 |
 | Seller | seller@ecommerce.local | Seller12345 |
+| Seller | seller2@ecommerce.local | Seller2345 |
+| Seller | seller3@ecommerce.local | Seller3456 |
+| Seller | seller4@ecommerce.local | Seller4567 |
 | Customer | customer@ecommerce.local | Customer12345 |
 
 ## API endpointlar (Faza 4)
