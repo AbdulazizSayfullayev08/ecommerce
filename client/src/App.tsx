@@ -6,6 +6,8 @@ import HomePage from '@/pages/HomePage'
 import ProductsPage from '@/pages/ProductsPage'
 import ProductDetailPage from '@/pages/ProductDetailPage'
 import CartPage from '@/pages/CartPage'
+import CheckoutPage from '@/pages/CheckoutPage'
+import CheckoutSuccessPage from '@/pages/CheckoutSuccessPage'
 import NotFoundPage from '@/pages/NotFoundPage'
 import LoginPage from '@/pages/auth/LoginPage'
 import RegisterPage from '@/pages/auth/RegisterPage'
@@ -35,6 +37,15 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="checkout"
+              element={
+                <ProtectedRoute>
+                  <CheckoutPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="checkout/success" element={<CheckoutSuccessPage />} />
 
             <Route
               path="login"

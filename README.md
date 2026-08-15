@@ -45,7 +45,7 @@ npm run dev            # http://localhost:5173
 
 - Health: `GET http://localhost:5000/api/health`
 - Frontend orqali: `GET http://localhost:5173/api/health`
-- Testlar: `cd server && npm test` (60 test)
+- Testlar: `cd server && npm test` (69 test)
 
 ## Seed ma'lumotlar
 
@@ -117,6 +117,13 @@ npm run seed
 - `PUT /api/coupons/:id` — yangilash
 - `DELETE /api/coupons/:id` — o'chirish
 
+## API endpointlar (Faza 7)
+
+### Checkout (kirish talab qilinadi)
+- `POST /api/checkout` — Stripe Checkout Session yaratish (`addressId`) → `{ url, orderNumber }`; to'lov tasdiqlanganda webhook buyurtmani `paid` qiladi
+- `POST /api/checkout/cod` — yetkazib berishda to'lash; buyurtma darhol `processing`, stock kamayadi, savat tozalanadi, kupon iste'moli oshadi
+- `POST /api/checkout/webhook` — Stripe webhook (`checkout.session.completed` → `paid`, stock, savat). Dev rejimda (`STRIPE_WEBHOOK_SECRET` bo'sh) oddiy JSON event qabul qilinadi; production'da signature tekshiriladi
+
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
@@ -125,7 +132,8 @@ npm run seed
 - [x] Faza 4 — Product/Category modellari + API (slug avtomatik, upload, filter/sort/pagination), 15 avtomatik test
 - [x] Faza 5 — Frontend: uy sahifa, mahsulotlar ro'yxati, filter, sort, pagination, mahsulot sahifasi
 - [x] Faza 6 — Cart + kupon (server + client: savat sahifasi, miqdor, kupon maydoni, nav badge), 12 avtomatik test
-- [ ] Faza 7 — Checkout + Stripe
+- [x] Faza 7 — Checkout + Stripe (COD buyurtma, Stripe Session + webhook, stock kamayishi, client checkout sahifasi), 9 avtomatik test
+- [ ] Faza 8 — Order tizimi + email
 - [ ] Faza 8 — Order tizimi + email
 - [ ] Faza 9 — Store/Seller moduli
 - [ ] Faza 10 — Payout/komissiya

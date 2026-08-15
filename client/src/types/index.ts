@@ -147,3 +147,37 @@ export interface Cart {
 export interface CartResponse {
   cart: Cart
 }
+
+export interface OrderItem {
+  product: string
+  name: string
+  price: number
+  qty: number
+  image: string | null
+}
+
+export interface OrderAddress {
+  fullName: string
+  phone: string
+  country: string
+  region: string
+  city: string
+  street: string
+  zip?: string
+}
+
+export interface Order {
+  _id: string
+  orderNumber: string
+  items: OrderItem[]
+  address: OrderAddress
+  paymentMethod: 'stripe' | 'cod'
+  paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded'
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+  subtotal: number
+  discount: number
+  couponCode: string | null
+  shippingCost: number
+  total: number
+  createdAt: string
+}
