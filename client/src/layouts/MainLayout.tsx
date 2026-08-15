@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '@/features/auth/AuthContext'
 import { useCart } from '@/features/cart/CartContext'
+import { useWishlist } from '@/features/wishlist/WishlistContext'
 import { getFileUrl } from '@/utils/fileUrl'
 
 const navItems = [
@@ -11,6 +12,7 @@ const navItems = [
 export default function MainLayout() {
   const { user, logout } = useAuth()
   const { itemCount } = useCart()
+  const { count: wishCount } = useWishlist()
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -36,6 +38,23 @@ export default function MainLayout() {
 
             {user ? (
               <div className="flex items-center gap-3">
+                <NavLink
+                  to="/wishlist"
+                  className={({ isActive }) =>
+                    `relative rounded-lg px-3 py-1.5 text-sm ${
+                      isActive
+                        ? 'font-medium text-indigo-600'
+                        : 'text-gray-600 hover:text-indigo-600'
+                    }`
+                  }
+                >
+                  Sevimlilar
+                  {wishCount > 0 && (
+                    <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+                      {wishCount}
+                    </span>
+                  )}
+                </NavLink>
                 <NavLink
                   to="/cart"
                   className={({ isActive }) =>

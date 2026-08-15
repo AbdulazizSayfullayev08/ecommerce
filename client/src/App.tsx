@@ -1,12 +1,14 @@
 import { Route, Routes } from 'react-router-dom'
 import { AuthProvider } from '@/features/auth/AuthContext'
 import { CartProvider } from '@/features/cart/CartContext'
+import { WishlistProvider } from '@/features/wishlist/WishlistContext'
 import MainLayout from '@/layouts/MainLayout'
 import HomePage from '@/pages/HomePage'
 import ProductsPage from '@/pages/ProductsPage'
 import ProductDetailPage from '@/pages/ProductDetailPage'
 import StorePage from '@/pages/StorePage'
 import CartPage from '@/pages/CartPage'
+import WishlistPage from '@/pages/WishlistPage'
 import CheckoutPage from '@/pages/CheckoutPage'
 import CheckoutSuccessPage from '@/pages/CheckoutSuccessPage'
 import NotFoundPage from '@/pages/NotFoundPage'
@@ -27,7 +29,8 @@ export default function App() {
   return (
     <AuthProvider>
       <CartProvider>
-        <Routes>
+        <WishlistProvider>
+          <Routes>
           <Route element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route path="products" element={<ProductsPage />} />
@@ -50,6 +53,15 @@ export default function App() {
               }
             />
             <Route path="checkout/success" element={<CheckoutSuccessPage />} />
+
+            <Route
+              path="wishlist"
+              element={
+                <ProtectedRoute>
+                  <WishlistPage />
+                </ProtectedRoute>
+              }
+            />
 
             <Route
               path="login"
@@ -127,7 +139,8 @@ export default function App() {
             />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+          </Routes>
+        </WishlistProvider>
       </CartProvider>
     </AuthProvider>
   )

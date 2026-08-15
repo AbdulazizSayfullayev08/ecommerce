@@ -45,7 +45,7 @@ npm run dev            # http://localhost:5173
 
 - Health: `GET http://localhost:5000/api/health`
 - Frontend orqali: `GET http://localhost:5173/api/health`
-- Testlar: `cd server && npm test` (105 test)
+- Testlar: `cd server && npm test` (111 test)
 
 ## Seed ma'lumotlar
 
@@ -165,6 +165,14 @@ npm run seed
 - `DELETE /api/products/:productId/reviews/:reviewId` — egasi yoki admin o'chirish
 - Har bir o'zgarishda mahsulot `averageRating`/`ratingCount` avtomatik qayta hisoblanadi
 
+### Sevimlilar (Faza 13)
+- `GET /api/wishlist` — foydalanuvchining sevimlilari (mahsulotlar to'liq populate qilinadi)
+- `GET /api/wishlist/ids` — sevimli mahsulot ID'lari (ProductCard yurak holati uchun)
+- `POST /api/wishlist/items` — `{ productId }` qo'shish (idempotent)
+- `DELETE /api/wishlist/items/:productId` — olib tashlash
+- `DELETE /api/wishlist` — butun ro'yxatni tozalash
+- Har bir ro'yxat bir foydalanuvchiga bog'langan (`user` unique), `items` array sifatida saqlanadi
+
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
@@ -179,7 +187,8 @@ npm run seed
 - [x] Faza 10 — Payout/komissiya (seller daromadi, 5% komissiya, to'lov so'rovlari + admin tasdiqlash), 8 avtomatik test
 - [x] Faza 11 — Statistika (seller + admin dashboard, top mahsulotlar/sellerlar, oylik diagramma), 4 avtomatik test
 - [x] Faza 12 — Sharh va reytinglar (yulduzlar, sharhlar, o'rtacha reyting avto-hisoblash), 8 avtomatik test
-- [ ] Faza 13 — Sevimlilar (wishlist)
+- [x] Faza 13 — Sevimlilar (wishlist: mahsulot kartasida yurak, sevimlilar sahifasi, nav badge), 6 avtomatik test
+- [ ] Faza 14 — Admin panel kengaytirish
 - [ ] Faza 8 — Order tizimi + email
 - [ ] Faza 9 — Store/Seller moduli
 - [ ] Faza 10 — Payout/komissiya
