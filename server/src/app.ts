@@ -9,6 +9,8 @@ import { notFound } from './middlewares/notFound';
 import routes from './routes';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
+import categoryRoutes from './routes/categoryRoutes';
+import productRoutes from './routes/productRoutes';
 
 export function createApp(): Express {
   const app: Express = express();
@@ -27,6 +29,8 @@ export function createApp(): Express {
   app.use('/api', routes);
   app.use('/api/auth', authRoutes);
   app.use('/api/users', userRoutes);
+  app.use('/api/categories', categoryRoutes);
+  app.use('/api/products', productRoutes);
 
   app.use(notFound);
   app.use(errorHandler);

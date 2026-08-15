@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { protect, authorize } from '../middlewares/auth';
 import { validate } from '../middlewares/validate';
-import { uploadAvatar } from '../middlewares/upload';
+import { avatarUpload } from '../middlewares/upload';
 import { UserRole } from '../types';
 import {
   createAddress,
@@ -31,7 +31,7 @@ const router = Router();
 router.use(protect);
 
 router.patch('/me', validate(updateProfileSchema), updateProfileController);
-router.post('/me/avatar', uploadAvatar.single('avatar'), uploadAvatarController);
+router.post('/me/avatar', avatarUpload.single, uploadAvatarController);
 
 router.get('/me/addresses', getAddresses);
 router.post('/me/addresses', validate(addressSchema), createAddress);

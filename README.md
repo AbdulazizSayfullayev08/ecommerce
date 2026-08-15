@@ -45,7 +45,7 @@ npm run dev            # http://localhost:5173
 
 - Health: `GET http://localhost:5000/api/health`
 - Frontend orqali: `GET http://localhost:5173/api/health`
-- Testlar: `cd server && npm test` (33 test)
+- Testlar: `cd server && npm test` (48 test)
 
 ## Seed ma'lumotlar
 
@@ -62,8 +62,17 @@ npm run seed
 | Seller | seller@ecommerce.local | Seller12345 |
 | Customer | customer@ecommerce.local | Customer12345 |
 
-## API endpointlar (Faza 3)
+## API endpointlar (Faza 4)
 
+### Auth (Faza 2)
+- `POST /api/auth/register` — ro'yxatdan o'tish (OTP emailga yuboriladi)
+- `POST /api/auth/verify-email` — OTP bilan tasdiqlash
+- `POST /api/auth/login` — login (access token + refresh cookie)
+- `POST /api/auth/refresh` — access tokenni yangilash (rotation)
+- `POST /api/auth/logout` — chiqish
+- `POST /api/auth/forgot-password`, `POST /api/auth/reset-password` — parolni tiklash
+
+### Foydalanuvchi (Faza 3)
 - `PATCH /api/users/me` — profilni yangilash (name, phone)
 - `POST /api/users/me/avatar` — avatar yuklash (multipart)
 - `GET|POST /api/users/me/addresses` — manzillar
@@ -73,12 +82,30 @@ npm run seed
 - `GET /api/users` — admin: foydalanuvchilar (search/role/page)
 - `PATCH /api/users/:id/role|block|approve` — admin boshqaruvi
 
+### Kategoriya
+- `GET /api/categories` — faol kategoriyalar (admin: `?all=true`)
+- `GET /api/categories/:slug` — bitta kategoriya
+- `POST /api/categories` — admin: yaratish (slug avtomatik)
+- `PUT /api/categories/:id` — admin: yangilash
+- `DELETE /api/categories/:id` — admin: o'chirish (ichida mahsulot bo'lmasa)
+
+### Mahsulot
+- `GET /api/products` — ro'yxat, filter: `q`, `category` (slug), `minPrice`, `maxPrice`, `seller`, `inStock`, `isFeatured`, `sort` (newest|price_asc|price_desc|rating|oldest), `page`, `limit`
+- `GET /api/products/featured` — tavsiya etilgan
+- `GET /api/products/:slug` — bitta mahsulot
+- `GET /api/products/mine` — seller: o'z mahsulotlari
+- `POST /api/products` — tasdiqlangan seller/admin: yaratish
+- `PUT /api/products/:id` — egasi/admin: yangilash
+- `PATCH /api/products/:id/active` — egasi/admin: faollikni almashtirish
+- `POST /api/products/:id/images` — egasi/admin: rasm yuklash (`images` array, max 5)
+- `DELETE /api/products/:id` — egasi/admin: o'chirish
+
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
 - [x] Faza 2 — Auth: register, OTP email tasdiqlash, login, JWT refresh rotation, logout, parolni tiklash, rate limiting, 17 avtomatik test
 - [x] Faza 3 — Profil + avatar upload, manzillar CRUD, seller arizasi, admin foydalanuvchi boshqaruvi (rol/blok/tasdiqlash), 16 avtomatik test
-- [ ] Faza 4 — Product/Category modellari + API
+- [x] Faza 4 — Product/Category modellari + API (slug avtomatik, upload, filter/sort/pagination), 15 avtomatik test
 - [ ] Faza 5 — Frontend: uy sahifa, mahsulotlar, filter
 - [ ] Faza 6 — Cart + kupon
 - [ ] Faza 7 — Checkout + Stripe
