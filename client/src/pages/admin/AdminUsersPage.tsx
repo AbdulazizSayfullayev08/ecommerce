@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import { userApi } from '@/features/user/userApi'
+import { useAuth } from '@/features/auth/AuthContext'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Alert } from '@/components/ui/Alert'
 import type { User, UserRole } from '@/types'
 
 export default function AdminUsersPage() {
+  const { user: currentUser } = useAuth()
   const [users, setUsers] = useState<User[]>([])
   const [search, setSearch] = useState('')
   const [roleFilter, setRoleFilter] = useState<UserRole | ''>('')
@@ -13,6 +15,7 @@ export default function AdminUsersPage() {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [busyId, setBusyId] = useState<string | null>(null)
 
   const load = useCallback(async (page = 1) => {
     setIsLoading(true)
@@ -41,15 +44,18 @@ export default function AdminUsersPage() {
     void load(1)
   }
 
-  const run = async (fn: () => Promise<{ user: User }>, successMessage: string) => {
+  const run = async (id: string, fn: () => Promise<{ user: User }>, successMessage: string) => {
     setError('')
     setMessage('')
+    setBusyId(id)
     try {
       const { user } = await fn()
       setUsers((prev) => prev.map((u) => (u._id === user._id ? user : u)))
       setMessage(successMessage)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Xatolik yuz berdi')
+    } finally {
+      setBusyId(null)
     }
   }
 
@@ -96,7 +102,9 @@ export default function AdminUsersPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {users.map((user) => (
+              {users.map((user) => {
+                const isSelf = user._id === currentUser?._id
+                return (
                 <tr key={user._id}>
                   <td className="px-4 py-3">
                     <p className="font-medium">{user.name}</p>
@@ -105,13 +113,15 @@ export default function AdminUsersPage() {
                   <td className="px-4 py-3">
                     <select
                       value={user.role}
+                      disabled={isSelf || busyId === user._id}
                       onChange={(e) =>
                         void run(
+                          user._id,
                           () => userApi.changeRole(user._id, e.target.value as UserRole),
                           'Rol o\'zgartirildi',
                         )
                       }
-                      className="rounded-lg border border-gray-300 px-2 py-1 text-xs"
+                      className="rounded-lg border border-gray-300 px-2 py-1 text-xs disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <option value="customer">Xaridor</option>
                       <option value="seller">Seller</option>
@@ -145,36 +155,47 @@ export default function AdminUsersPage() {
                     <div className="flex justify-end gap-2 text-xs">
                       {user.role === 'seller' && !user.isApproved && (
                         <button
+                          disabled={busyId === user._id}
                           onClick={() =>
                             void run(
+                              user._id,
                               () => userApi.setApproved(user._id, true),
                               'Seller tasdiqlandi',
                             )
                           }
-                          className="font-medium text-indigo-600 hover:underline"
+                          className="font-medium text-indigo-600 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           Tasdiqlash
                         </button>
                       )}
-                      <button
-                        onClick={() =>
-                          void run(
-                            () => userApi.setBlocked(user._id, !user.isBlocked),
-                            user.isBlocked ? 'Blok olib tashlandi' : 'Foydalanuvchi bloklandi',
-                          )
-                        }
-                        className={
-                          user.isBlocked
-                            ? 'font-medium text-green-600 hover:underline'
-                            : 'font-medium text-red-500 hover:underline'
-                        }
-                      >
-                        {user.isBlocked ? 'Blokdan chiqarish' : 'Bloklash'}
-                      </button>
+                      {!isSelf && (
+                        <button
+                          disabled={busyId === user._id}
+                          onClick={() =>
+                            void run(
+                              user._id,
+                              () => userApi.setBlocked(user._id, !user.isBlocked),
+                              user.isBlocked ? 'Blok olib tashlandi' : 'Foydalanuvchi bloklandi',
+                            )
+                          }
+                          className={
+                            user.isBlocked
+                              ? 'font-medium text-green-600 hover:underline disabled:cursor-not-allowed disabled:opacity-50'
+                              : 'font-medium text-red-500 hover:underline disabled:cursor-not-allowed disabled:opacity-50'
+                          }
+                        >
+                          {busyId === user._id
+                            ? 'Iltimos kuting...'
+                            : user.isBlocked
+                              ? 'Blokdan chiqarish'
+                              : 'Bloklash'}
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
-              ))}
+                )
+              })}
             </tbody>
           </table>
         </div>

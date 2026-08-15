@@ -19,7 +19,7 @@ export default function LoginPage() {
     setIsLoading(true)
     try {
       const user = await login(email, password)
-      navigate(user.role === 'admin' ? '/admin' : '/')
+      navigate(user.role === 'admin' ? '/admin/users' : '/')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Xatolik yuz berdi')
     } finally {

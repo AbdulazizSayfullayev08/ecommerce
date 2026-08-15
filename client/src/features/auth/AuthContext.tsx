@@ -46,6 +46,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     }
     init()
+
+    const handleAuthFailed = () => {
+      setAccessToken(null)
+      setUser(null)
+    }
+    window.addEventListener('dokon:auth-failed', handleAuthFailed)
+    return () => window.removeEventListener('dokon:auth-failed', handleAuthFailed)
   }, [])
 
   const login = useCallback(async (email: string, password: string) => {
