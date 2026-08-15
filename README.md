@@ -13,7 +13,7 @@ Rollar: **Admin**, **Seller**, **Customer**, **Guest**.
 | Ma'lumot | MongoDB + Mongoose |
 | Auth | JWT (access + refresh rotation), bcrypt |
 | To'lov | Stripe (test mode) + COD |
-| Email | Nodemailer + Gmail SMTP (bepul app password) |
+| Email | Nodemailer + Resend SMTP (bepul 100 email/kun) |
 | Upload | Multer (lokal storage) |
 
 ## Struktura
@@ -49,7 +49,7 @@ npm run dev            # http://localhost:5173
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
-- [ ] Faza 2 — Auth + JWT + OTP
+- [x] Faza 2 — Auth: register, OTP email tasdiqlash, login, JWT refresh rotation, logout, parolni tiklash, rate limiting, 17 avtomatik test
 - [ ] Faza 3 — User profili + manzillar + rollar
 - [ ] Faza 4 — Product/Category modellari + API
 - [ ] Faza 5 — Frontend: uy sahifa, mahsulotlar, filter

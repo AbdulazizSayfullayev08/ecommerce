@@ -5,3 +5,6 @@ dist/
 
 uploads/*
 !uploads/.gitkeep
+
+.env.test
+coverage/

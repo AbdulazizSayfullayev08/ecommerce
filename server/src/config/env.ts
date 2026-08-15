@@ -22,10 +22,11 @@ export const env = {
   },
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
   smtp: {
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: Number(process.env.SMTP_PORT) || 587,
-    user: process.env.SMTP_USER || '',
+    host: process.env.SMTP_HOST || 'smtp.resend.com',
+    port: Number(process.env.SMTP_PORT) || 465,
+    user: process.env.SMTP_USER || 'resend',
     pass: process.env.SMTP_PASS || '',
+    from: process.env.SMTP_FROM || '"Do\'kon" <onboarding@resend.dev>',
   },
   upload: {
     dir: process.env.UPLOAD_DIR || 'uploads',

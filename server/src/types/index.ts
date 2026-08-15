@@ -1,8 +1,10 @@
-export enum UserRole {
-  CUSTOMER = 'customer',
-  SELLER = 'seller',
-  ADMIN = 'admin',
-}
+export const UserRole = {
+  CUSTOMER: 'customer',
+  SELLER: 'seller',
+  ADMIN: 'admin',
+} as const;
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole];
 
 export interface ApiSuccess<T> {
   success: true;

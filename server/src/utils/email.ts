@@ -22,8 +22,13 @@ export async function sendEmail(options: {
     return;
   }
 
+  if (env.nodeEnv === 'test') {
+    console.log(`[email] Test rejimida email yuborilmayapti: ${options.to}`);
+    return;
+  }
+
   await transporter.sendMail({
-    from: `"Do'kon" <${env.smtp.user}>`,
+    from: env.smtp.from,
     to: options.to,
     subject: options.subject,
     text: options.text,

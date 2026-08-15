@@ -1,13 +1,15 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
+import { useAuth } from '@/features/auth/AuthContext'
 
 const navItems = [
   { to: '/', label: 'Bosh sahifa' },
   { to: '/products', label: 'Mahsulotlar' },
   { to: '/cart', label: 'Savat' },
-  { to: '/login', label: 'Kirish' },
 ]
 
 export default function MainLayout() {
+  const { user, logout } = useAuth()
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="border-b border-gray-200">
@@ -29,6 +31,31 @@ export default function MainLayout() {
                 {item.label}
               </NavLink>
             ))}
+
+            {user ? (
+              <div className="flex items-center gap-3">
+                <Link to="/account" className="text-gray-700 hover:text-indigo-600">
+                  {user.name}
+                </Link>
+                <button
+                  onClick={() => logout()}
+                  className="rounded-lg px-3 py-1.5 text-sm text-red-500 hover:bg-red-50"
+                >
+                  Chiqish
+                </button>
+              </div>
+            ) : (
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'font-medium text-indigo-600'
+                    : 'text-gray-600 hover:text-indigo-600'
+                }
+              >
+                Kirish
+              </NavLink>
+            )}
           </nav>
         </div>
       </header>
