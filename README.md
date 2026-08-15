@@ -45,7 +45,7 @@ npm run dev            # http://localhost:5173
 
 - Health: `GET http://localhost:5000/api/health`
 - Frontend orqali: `GET http://localhost:5173/api/health`
-- Testlar: `cd server && npm test` (48 test)
+- Testlar: `cd server && npm test` (60 test)
 
 ## Seed ma'lumotlar
 
@@ -100,14 +100,31 @@ npm run seed
 - `POST /api/products/:id/images` — egasi/admin: rasm yuklash (`images` array, max 5)
 - `DELETE /api/products/:id` — egasi/admin: o'chirish
 
+## API endpointlar (Faza 6)
+
+### Cart (kirish talab qilinadi)
+- `GET /api/cart` — savat (itemCount, subtotal/discount/total bilan)
+- `DELETE /api/cart` — savatni tozalash
+- `POST /api/cart/items` — qo'shish (`productId`, `qty`) — stock chekloviga bo'ysunadi
+- `PATCH /api/cart/items/:productId` — miqdorni yangilash (`qty`, 0 bo'lsa o'chiriladi)
+- `DELETE /api/cart/items/:productId` — itemni o'chirish
+- `POST /api/cart/coupon` — kupon qo'llash (`code`)
+- `DELETE /api/cart/coupon` — kupondan voz kechish
+
+### Kupon (admin)
+- `GET /api/coupons` — ro'yxat (search/type/active/page)
+- `POST /api/coupons` — yaratish (percentage|fixed, minAmount, maxDiscount, expiresAt, usageLimit)
+- `PUT /api/coupons/:id` — yangilash
+- `DELETE /api/coupons/:id` — o'chirish
+
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
 - [x] Faza 2 — Auth: register, OTP email tasdiqlash, login, JWT refresh rotation, logout, parolni tiklash, rate limiting, 17 avtomatik test
 - [x] Faza 3 — Profil + avatar upload, manzillar CRUD, seller arizasi, admin foydalanuvchi boshqaruvi (rol/blok/tasdiqlash), 16 avtomatik test
 - [x] Faza 4 — Product/Category modellari + API (slug avtomatik, upload, filter/sort/pagination), 15 avtomatik test
-- [ ] Faza 5 — Frontend: uy sahifa, mahsulotlar, filter
-- [ ] Faza 6 — Cart + kupon
+- [x] Faza 5 — Frontend: uy sahifa, mahsulotlar ro'yxati, filter, sort, pagination, mahsulot sahifasi
+- [x] Faza 6 — Cart + kupon (server + client: savat sahifasi, miqdor, kupon maydoni, nav badge), 12 avtomatik test
 - [ ] Faza 7 — Checkout + Stripe
 - [ ] Faza 8 — Order tizimi + email
 - [ ] Faza 9 — Store/Seller moduli

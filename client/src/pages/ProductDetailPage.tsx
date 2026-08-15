@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { catalogApi } from '@/features/catalog/catalogApi'
 import { useAuth } from '@/features/auth/AuthContext'
+import { useCart } from '@/features/cart/CartContext'
 import { Alert } from '@/components/ui/Alert'
 import type { Product } from '@/types'
 import { getFileUrl } from '@/utils/fileUrl'
@@ -10,10 +11,14 @@ import { formatPrice, getDiscountPercent } from '@/utils/format'
 export default function ProductDetailPage() {
   const { slug } = useParams<{ slug: string }>()
   const { user } = useAuth()
+  const { addItem } = useCart()
+  const navigate = useNavigate()
   const [product, setProduct] = useState<Product | null>(null)
   const [imageIndex, setImageIndex] = useState(0)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const [adding, setAdding] = useState(false)
+  const [added, setAdded] = useState(false)
 
   useEffect(() => {
     if (!slug) return
@@ -49,6 +54,20 @@ export default function ProductDetailPage() {
     typeof product.category === 'object' ? product.category : undefined
   const seller = typeof product.seller === 'object' ? product.seller : undefined
   const isOut = product.stock === 0
+
+  const handleAdd = async () => {
+    setError('')
+    setAdding(true)
+    setAdded(false)
+    try {
+      await addItem(product._id, 1)
+      setAdded(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Savatga qo\'shilmadi')
+    } finally {
+      setAdding(false)
+    }
+  }
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
@@ -130,19 +149,27 @@ export default function ProductDetailPage() {
         </p>
 
         {user ? (
-          <button
-            disabled={isOut}
-            className="w-full rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
-          >
-            Savatga qo'shish
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => void handleAdd()}
+              disabled={isOut || adding}
+              className="rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              {adding ? 'Qo\'shilmoqda...' : 'Savatga qo\'shish'}
+            </button>
+            {added && (
+              <Link to="/cart" className="text-sm font-medium text-indigo-600 hover:underline">
+                Savatga o'tish →
+              </Link>
+            )}
+          </div>
         ) : (
-          <Link
-            to="/login"
+          <button
+            onClick={() => navigate('/login')}
             className="inline-block rounded-xl bg-indigo-600 px-6 py-3 font-medium text-white transition-colors hover:bg-indigo-700"
           >
             Savatga qo'shish uchun kiring
-          </Link>
+          </button>
         )}
 
         {product.description && (

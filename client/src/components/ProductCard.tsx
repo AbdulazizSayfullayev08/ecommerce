@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import type { Product } from '@/types'
+import { useCart } from '@/features/cart/CartContext'
+import { useAuth } from '@/features/auth/AuthContext'
 import { getFileUrl } from '@/utils/fileUrl'
 import { formatPrice, getDiscountPercent } from '@/utils/format'
 
@@ -8,11 +10,28 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { user } = useAuth()
+  const { addItem } = useCart()
+  const navigate = useNavigate()
   const image = product.images?.[0]
   const discount = getDiscountPercent(product.price, product.compareAtPrice)
   const category =
     typeof product.category === 'object' ? product.category.name : undefined
   const seller = typeof product.seller === 'object' ? product.seller.name : undefined
+
+  const handleAdd = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (!user) {
+      navigate('/login')
+      return
+    }
+    try {
+      await addItem(product._id, 1)
+    } catch {
+      // ignore — qo'shib bo'lmagan mahsulot
+    }
+  }
 
   return (
     <Link
@@ -40,6 +59,14 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-sm font-semibold text-white">
             Tugagan
           </div>
+        )}
+        {product.stock > 0 && (
+          <button
+            onClick={(e) => void handleAdd(e)}
+            className="absolute bottom-2 right-2 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow transition-opacity group-hover:opacity-100 hover:bg-indigo-700"
+          >
+            Savatga
+          </button>
         )}
       </div>
 

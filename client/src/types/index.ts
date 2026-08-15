@@ -124,3 +124,26 @@ export interface ProductFilters {
   page?: number
   limit?: number
 }
+
+export interface CartItem {
+  product: Product
+  qty: number
+}
+
+export interface CartTotals {
+  subtotal: number
+  discount: number
+  total: number
+}
+
+export interface Cart {
+  _id: string
+  items: CartItem[]
+  couponCode: string | null
+  itemCount: number
+  totals: CartTotals
+}
+
+export interface CartResponse {
+  cart: Cart
+}
