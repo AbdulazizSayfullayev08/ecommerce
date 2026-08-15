@@ -75,6 +75,11 @@ export default function MainLayout() {
                     To'lovlar
                   </Link>
                 )}
+                {user.role === 'admin' && (
+                  <Link to="/admin/stats" className="text-gray-600 hover:text-indigo-600">
+                    Statistika
+                  </Link>
+                )}
                 <button
                   onClick={() => logout()}
                   className="rounded-lg px-3 py-1.5 text-sm text-red-500 hover:bg-red-50"

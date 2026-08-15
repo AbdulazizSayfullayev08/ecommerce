@@ -17,6 +17,7 @@ import checkoutRoutes from './routes/checkoutRoutes';
 import orderRoutes from './routes/orderRoutes';
 import storeRoutes from './routes/storeRoutes';
 import payoutRoutes from './routes/payoutRoutes';
+import statsRoutes from './routes/statsRoutes';
 
 export function createApp(): Express {
   const app: Express = express();
@@ -50,6 +51,7 @@ export function createApp(): Express {
   app.use('/api/orders', orderRoutes);
   app.use('/api/stores', storeRoutes);
 app.use('/api/payouts', payoutRoutes);
+app.use('/api/stats', statsRoutes);
 
   app.use(notFound);
   app.use(errorHandler);

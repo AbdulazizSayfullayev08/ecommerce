@@ -3,6 +3,7 @@ import { Schema, model, Types } from 'mongoose';
 const orderItemSchema = new Schema(
   {
     product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+    seller: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
     price: { type: Number, required: true, min: 0 },
     qty: { type: Number, required: true, min: 1 },
@@ -72,6 +73,7 @@ orderSchema.pre('validate', function (this: { orderNumber?: string }) {
 
 export interface IOrderItem {
   product: Types.ObjectId;
+  seller: Types.ObjectId;
   name: string;
   price: number;
   qty: number;

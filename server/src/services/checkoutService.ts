@@ -16,6 +16,7 @@ interface CartItemWithProduct {
     price: number;
     stock: number;
     images?: string[];
+    seller: unknown;
   };
   qty: number;
 }
@@ -43,6 +44,7 @@ async function snapshotItems(cartItems: CartItemWithProduct[]): Promise<IOrderIt
     }
     items.push({
       product: product._id as IOrderItem['product'],
+      seller: (product.seller as { _id: IOrderItem['seller'] })._id,
       name: product.name,
       price: product.price,
       qty: it.qty,

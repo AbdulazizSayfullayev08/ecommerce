@@ -7,8 +7,9 @@ import { SellerTab } from './tabs/SellerTab'
 import { OrdersTab } from './tabs/OrdersTab'
 import { SellerStoreTab } from './tabs/SellerStoreTab'
 import { PayoutTab } from './tabs/PayoutTab'
+import { StatsTab } from './tabs/StatsTab'
 
-type Tab = 'profile' | 'addresses' | 'security' | 'seller' | 'orders' | 'store' | 'payout'
+type Tab = 'profile' | 'addresses' | 'security' | 'seller' | 'orders' | 'store' | 'payout' | 'stats'
 
 const tabs: { id: Tab; label: string; adminOnly?: boolean; sellerOnly?: boolean }[] = [
   { id: 'profile', label: 'Profil' },
@@ -17,6 +18,7 @@ const tabs: { id: Tab; label: string; adminOnly?: boolean; sellerOnly?: boolean 
   { id: 'security', label: 'Xavfsizlik' },
   { id: 'seller', label: 'Seller bo\'lish' },
   { id: 'store', label: 'Mening do\'konim', sellerOnly: true },
+  { id: 'stats', label: 'Statistika', sellerOnly: true },
   { id: 'payout', label: 'To\'lovlar', sellerOnly: true },
 ]
 
@@ -60,6 +62,7 @@ export default function AccountPage() {
           {active === 'seller' && <SellerTab />}
           {active === 'store' && <SellerStoreTab />}
           {active === 'payout' && <PayoutTab />}
+          {active === 'stats' && <StatsTab />}
         </div>
       </div>
     </div>

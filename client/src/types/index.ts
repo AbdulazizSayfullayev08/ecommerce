@@ -232,3 +232,30 @@ export interface PaginatedPayouts {
   page: number
   pages: number
 }
+
+export interface MonthlyRevenue {
+  month: string
+  revenue: number
+}
+
+export interface SellerStats {
+  revenue: number
+  itemsSold: number
+  orders: number
+  paidPayouts: number
+  topProducts: { name: string; qty: number; revenue: number }[]
+  monthly: MonthlyRevenue[]
+}
+
+export interface AdminStats {
+  revenue: number
+  deliveredOrders: number
+  users: number
+  sellers: number
+  products: number
+  stores: number
+  orders: number
+  pendingPayouts: number
+  topSellers: { name: string; revenue: number; orders: number; itemsSold: number }[]
+  monthly: MonthlyRevenue[]
+}

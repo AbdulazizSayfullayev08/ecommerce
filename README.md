@@ -45,7 +45,7 @@ npm run dev            # http://localhost:5173
 
 - Health: `GET http://localhost:5000/api/health`
 - Frontend orqali: `GET http://localhost:5173/api/health`
-- Testlar: `cd server && npm test` (93 test)
+- Testlar: `cd server && npm test` (97 test)
 
 ## Seed ma'lumotlar
 
@@ -153,6 +153,11 @@ npm run seed
 - `GET /api/payouts` — admin: barcha so'rovlar (`status`, `page` filtrlari)
 - `PATCH /api/payouts/:id` — admin: `paid` (tasdiqlash) yoki `rejected` (rad etish, daromad qaytadi)
 
+### Statistika (Faza 11)
+- `GET /api/stats/seller` — seller: daromad, buyurtmalar, sotilgan dona, top mahsulotlar, oxirgi 6 oy oylik daromad
+- `GET /api/stats/admin` — admin: umumiy daromad, buyurtmalar, userlar/sellerlar/mahsulotlar/do'konlar soni, top sellerlar, kutilayotgan to'lovlar, oylik daromad
+- Buyurtma item'lari endi `seller` snapshot'ini saqlaydi — statistika va seller balansi shu orqali hisoblanadi
+
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
@@ -165,7 +170,8 @@ npm run seed
 - [x] Faza 8 — Order tizimi + email (buyurtmalarim, admin/seller ro'yxatlari, status + email bildirishnoma), 9 avtomatik test
 - [x] Faza 9 — Store/Seller moduli (do'kon sahifasi, yaratish/tahrirlash, logo/banner, seller tasdiqlashda avto-do'kon), 7 avtomatik test
 - [x] Faza 10 — Payout/komissiya (seller daromadi, 5% komissiya, to'lov so'rovlari + admin tasdiqlash), 8 avtomatik test
-- [ ] Faza 11 — Reklama/statistika
+- [x] Faza 11 — Statistika (seller + admin dashboard, top mahsulotlar/sellerlar, oylik diagramma), 4 avtomatik test
+- [ ] Faza 12 — Sharh va reytinglar
 - [ ] Faza 8 — Order tizimi + email
 - [ ] Faza 9 — Store/Seller moduli
 - [ ] Faza 10 — Payout/komissiya

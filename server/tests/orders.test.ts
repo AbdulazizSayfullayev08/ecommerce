@@ -209,11 +209,20 @@ describe('Orders API', () => {
     const adminToken = await loginAs(admin);
     const user = await createUser();
     const token = await loginAs(user);
+    const seller = await createUser({ role: UserRole.SELLER, isApproved: true });
 
     await Order.create({
       user: user._id,
       orderNumber: `ORD-STRIPE-TEST-${Date.now()}`,
-      items: [{ product: '000000000000000000000001', name: 'Test', price: 100, qty: 1 }],
+      items: [
+        {
+          product: '000000000000000000000001',
+          seller: seller._id,
+          name: 'Test',
+          price: 100,
+          qty: 1,
+        },
+      ],
       address: { fullName: 'Aziz', phone: '+998', region: 'T', city: 'T', street: 'S' },
       paymentMethod: 'stripe',
       paymentStatus: 'paid',
