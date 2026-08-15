@@ -36,4 +36,5 @@ export const env = {
     secretKey: process.env.STRIPE_SECRET_KEY || '',
     webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',
   },
+  commissionRate: Number(process.env.COMMISSION_RATE) || 5,
 } as const;

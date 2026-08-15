@@ -4,6 +4,7 @@ import User from '../models/User';
 import { ApiError } from '../utils/ApiError';
 import { sendEmail } from '../utils/email';
 import { formatPrice } from '../utils/formatPrice';
+import { markOrderEarningsAvailable } from './payoutService';
 
 export interface OrderListQuery {
   page?: number;
@@ -69,6 +70,10 @@ export async function updateOrderStatus(orderId: string, status: string) {
     order.paymentStatus = 'failed';
   }
   await order.save();
+
+  if (status === 'delivered') {
+    await markOrderEarningsAvailable(orderId);
+  }
 
   void sendOrderStatusEmail(order, status);
   return order;

@@ -16,6 +16,7 @@ import couponRoutes from './routes/couponRoutes';
 import checkoutRoutes from './routes/checkoutRoutes';
 import orderRoutes from './routes/orderRoutes';
 import storeRoutes from './routes/storeRoutes';
+import payoutRoutes from './routes/payoutRoutes';
 
 export function createApp(): Express {
   const app: Express = express();
@@ -48,6 +49,7 @@ export function createApp(): Express {
   app.use('/api/checkout', checkoutRoutes);
   app.use('/api/orders', orderRoutes);
   app.use('/api/stores', storeRoutes);
+app.use('/api/payouts', payoutRoutes);
 
   app.use(notFound);
   app.use(errorHandler);

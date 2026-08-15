@@ -195,3 +195,40 @@ export interface Store {
   isActive: boolean
   createdAt: string
 }
+
+export interface SellerEarning {
+  _id: string
+  seller: string
+  order: string
+  orderNumber: string
+  gross: number
+  commission: number
+  amount: number
+  status: 'pending' | 'available' | 'processing' | 'paid'
+  createdAt: string
+}
+
+export interface Payout {
+  _id: string
+  seller: { _id: string; name: string; email: string } | string
+  amount: number
+  status: 'pending' | 'paid' | 'rejected'
+  paidAt: string | null
+  createdAt: string
+}
+
+export interface PayoutSummary {
+  pending: number
+  available: number
+  processing: number
+  paid: number
+  recentEarnings: SellerEarning[]
+  payouts: Payout[]
+}
+
+export interface PaginatedPayouts {
+  payouts: Payout[]
+  total: number
+  page: number
+  pages: number
+}

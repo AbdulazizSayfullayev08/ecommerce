@@ -17,6 +17,7 @@ import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage'
 import ResetPasswordPage from '@/pages/auth/ResetPasswordPage'
 import AccountPage from '@/pages/account/AccountPage'
 import AdminUsersPage from '@/pages/admin/AdminUsersPage'
+import AdminPayoutsPage from '@/pages/admin/AdminPayoutsPage'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
 import { PublicOnlyRoute } from '@/components/PublicOnlyRoute'
 import { UserRole } from '@/types'
@@ -104,6 +105,14 @@ export default function App() {
               element={
                 <ProtectedRoute roles={[UserRole.ADMIN]}>
                   <AdminUsersPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="admin/payouts"
+              element={
+                <ProtectedRoute roles={[UserRole.ADMIN]}>
+                  <AdminPayoutsPage />
                 </ProtectedRoute>
               }
             />

@@ -7,6 +7,7 @@ import { ApiError } from '../utils/ApiError';
 import { getCart } from './cartService';
 import { incrementCouponUsage } from './couponService';
 import { sendOrderConfirmationEmail } from './orderService';
+import { createSellerEarnings } from './payoutService';
 
 interface CartItemWithProduct {
   product: {
@@ -176,6 +177,7 @@ export async function createCodOrder(userId: string, addressId: string) {
 
   await clearUserCart(userId, cart.couponCode);
 
+  await createSellerEarnings(order);
   void sendOrderConfirmationEmail(order).catch(() => undefined);
   return order;
 }
@@ -193,5 +195,6 @@ export async function handleCheckoutSessionCompleted(sessionId: string) {
 
   await clearUserCart(order.user.toString(), order.couponCode);
 
+  await createSellerEarnings(order);
   void sendOrderConfirmationEmail(order).catch(() => undefined);
 }

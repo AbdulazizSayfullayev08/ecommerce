@@ -70,6 +70,11 @@ export default function MainLayout() {
                     Boshqaruv
                   </Link>
                 )}
+                {user.role === 'admin' && (
+                  <Link to="/admin/payouts" className="text-gray-600 hover:text-indigo-600">
+                    To'lovlar
+                  </Link>
+                )}
                 <button
                   onClick={() => logout()}
                   className="rounded-lg px-3 py-1.5 text-sm text-red-500 hover:bg-red-50"

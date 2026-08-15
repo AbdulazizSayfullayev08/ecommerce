@@ -45,7 +45,7 @@ npm run dev            # http://localhost:5173
 
 - Health: `GET http://localhost:5000/api/health`
 - Frontend orqali: `GET http://localhost:5173/api/health`
-- Testlar: `cd server && npm test` (85 test)
+- Testlar: `cd server && npm test` (93 test)
 
 ## Seed ma'lumotlar
 
@@ -145,6 +145,14 @@ npm run seed
 - `POST /api/stores/logo`, `POST /api/stores/banner` — egasi: rasm yuklash
 - Admin seller'ni tasdiqlaganda (`PATCH /api/users/:id/approve`) avtomatik do'kon yaratiladi
 
+### To'lovlar/Komissiya (Faza 10)
+- Har bir buyurtmadan `COMMISSION_RATE` (standart 5%) platforma komissiyasi ushlanadi
+- Daromad: order `delivered` bo'lganda `available` bo'ladi (buyurtma bilan bog'liq)
+- `GET /api/payouts/summary` — seller: mavjud/jarayonda/to'langan balans + tarix
+- `POST /api/payouts` — seller: mavjud balansdan to'lov so'rash (`amount`)
+- `GET /api/payouts` — admin: barcha so'rovlar (`status`, `page` filtrlari)
+- `PATCH /api/payouts/:id` — admin: `paid` (tasdiqlash) yoki `rejected` (rad etish, daromad qaytadi)
+
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
@@ -156,7 +164,8 @@ npm run seed
 - [x] Faza 7 — Checkout + Stripe (COD buyurtma, Stripe Session + webhook, stock kamayishi, client checkout sahifasi), 9 avtomatik test
 - [x] Faza 8 — Order tizimi + email (buyurtmalarim, admin/seller ro'yxatlari, status + email bildirishnoma), 9 avtomatik test
 - [x] Faza 9 — Store/Seller moduli (do'kon sahifasi, yaratish/tahrirlash, logo/banner, seller tasdiqlashda avto-do'kon), 7 avtomatik test
-- [ ] Faza 10 — Payout/komissiya
+- [x] Faza 10 — Payout/komissiya (seller daromadi, 5% komissiya, to'lov so'rovlari + admin tasdiqlash), 8 avtomatik test
+- [ ] Faza 11 — Reklama/statistika
 - [ ] Faza 8 — Order tizimi + email
 - [ ] Faza 9 — Store/Seller moduli
 - [ ] Faza 10 — Payout/komissiya
