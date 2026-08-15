@@ -8,8 +8,11 @@ import RegisterPage from '@/pages/auth/RegisterPage'
 import VerifyEmailPage from '@/pages/auth/VerifyEmailPage'
 import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage'
 import ResetPasswordPage from '@/pages/auth/ResetPasswordPage'
+import AccountPage from '@/pages/account/AccountPage'
+import AdminUsersPage from '@/pages/admin/AdminUsersPage'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
 import { PublicOnlyRoute } from '@/components/PublicOnlyRoute'
+import { UserRole } from '@/types'
 
 export default function App() {
   return (
@@ -63,7 +66,16 @@ export default function App() {
             path="account"
             element={
               <ProtectedRoute>
-                <HomePage />
+                <AccountPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="admin/users"
+            element={
+              <ProtectedRoute roles={[UserRole.ADMIN]}>
+                <AdminUsersPage />
               </ProtectedRoute>
             }
           />

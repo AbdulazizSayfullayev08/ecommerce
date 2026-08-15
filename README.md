@@ -45,12 +45,39 @@ npm run dev            # http://localhost:5173
 
 - Health: `GET http://localhost:5000/api/health`
 - Frontend orqali: `GET http://localhost:5173/api/health`
+- Testlar: `cd server && npm test` (33 test)
+
+## Seed ma'lumotlar
+
+Demo foydalanuvchilarni yaratish uchun (admin/seller/customer):
+
+```bash
+cd server
+npm run seed
+```
+
+| Rol | Email | Parol |
+|---|---|---|
+| Admin | admin@ecommerce.local | Admin12345 |
+| Seller | seller@ecommerce.local | Seller12345 |
+| Customer | customer@ecommerce.local | Customer12345 |
+
+## API endpointlar (Faza 3)
+
+- `PATCH /api/users/me` — profilni yangilash (name, phone)
+- `POST /api/users/me/avatar` — avatar yuklash (multipart)
+- `GET|POST /api/users/me/addresses` — manzillar
+- `PUT|DELETE /api/users/me/addresses/:id` — manzil tahrirlash/o'chirish
+- `PATCH /api/users/me/addresses/:id/default` — standart manzil
+- `POST /api/users/me/seller-application` — seller bo'lish arizasi
+- `GET /api/users` — admin: foydalanuvchilar (search/role/page)
+- `PATCH /api/users/:id/role|block|approve` — admin boshqaruvi
 
 ## Faza holati
 
 - [x] Faza 1 — Skeleton: Express+TS, Vite+React+TS, MongoDB ulash
 - [x] Faza 2 — Auth: register, OTP email tasdiqlash, login, JWT refresh rotation, logout, parolni tiklash, rate limiting, 17 avtomatik test
-- [ ] Faza 3 — User profili + manzillar + rollar
+- [x] Faza 3 — Profil + avatar upload, manzillar CRUD, seller arizasi, admin foydalanuvchi boshqaruvi (rol/blok/tasdiqlash), 16 avtomatik test
 - [ ] Faza 4 — Product/Category modellari + API
 - [ ] Faza 5 — Frontend: uy sahifa, mahsulotlar, filter
 - [ ] Faza 6 — Cart + kupon

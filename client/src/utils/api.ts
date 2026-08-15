@@ -6,27 +6,37 @@ interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   body?: unknown
   headers?: Record<string, string>
+  isFormData?: boolean
 }
 
 export async function apiRequest<T>(
   path: string,
   options: RequestOptions = {},
 ): Promise<T> {
-  const { method = 'GET', body, headers } = options
+  const { method = 'GET', body, headers, isFormData } = options
 
   const token = getAccessToken()
   const authHeaders: Record<string, string> = token
     ? { Authorization: `Bearer ${token}` }
     : {}
 
+  const finalHeaders: Record<string, string> = {
+    ...authHeaders,
+    ...headers,
+  }
+  if (!isFormData) {
+    finalHeaders['Content-Type'] = 'application/json'
+  }
+
   const res = await fetch(`${API_BASE_URL}${path}`, {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-      ...authHeaders,
-      ...headers,
-    },
-    body: body !== undefined ? JSON.stringify(body) : undefined,
+    headers: finalHeaders,
+    body:
+      body !== undefined
+        ? isFormData
+          ? (body as BodyInit)
+          : JSON.stringify(body)
+        : undefined,
     credentials: 'include',
   })
 

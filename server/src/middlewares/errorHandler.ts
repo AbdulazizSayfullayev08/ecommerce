@@ -31,6 +31,13 @@ export function errorHandler(
   } else if (err.name === 'CastError') {
     statusCode = 400;
     message = 'Invalid value';
+  } else if (err.name === 'MulterError') {
+    statusCode = 400;
+    if ((err as { code?: string }).code === 'LIMIT_FILE_SIZE') {
+      message = 'Fayl hajmi juda katta';
+    } else {
+      message = 'Fayl yuklashda xatolik yuz berdi';
+    }
   } else {
     console.error('[error]', err);
   }

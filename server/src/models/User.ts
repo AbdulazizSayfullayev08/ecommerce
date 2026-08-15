@@ -28,6 +28,7 @@ const userSchema = new Schema(
       index: true,
     },
     password: { type: String, required: true, minlength: 8, select: false },
+    phone: { type: String, trim: true },
     avatar: { type: String },
     role: {
       type: String,
@@ -72,12 +73,15 @@ userSchema.methods.comparePassword = function (candidatePassword: string) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-export type UserAddress = InferSchemaType<typeof addressSchema>;
+export type UserAddress = InferSchemaType<typeof addressSchema> & {
+  _id: Types.ObjectId;
+};
 
 export interface IUser {
   name: string;
   email: string;
   password: string;
+  phone?: string;
   avatar?: string;
   role: 'customer' | 'seller' | 'admin';
   storeId?: Types.ObjectId;

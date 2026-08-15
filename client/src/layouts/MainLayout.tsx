@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '@/features/auth/AuthContext'
+import { getFileUrl } from '@/utils/fileUrl'
 
 const navItems = [
   { to: '/', label: 'Bosh sahifa' },
@@ -34,9 +35,23 @@ export default function MainLayout() {
 
             {user ? (
               <div className="flex items-center gap-3">
-                <Link to="/account" className="text-gray-700 hover:text-indigo-600">
-                  {user.name}
-                </Link>
+                <div className="flex items-center gap-2">
+                  {user.avatar && (
+                    <img
+                      src={getFileUrl(user.avatar)}
+                      alt=""
+                      className="h-7 w-7 rounded-full object-cover"
+                    />
+                  )}
+                  <Link to="/account" className="text-gray-700 hover:text-indigo-600">
+                    {user.name}
+                  </Link>
+                </div>
+                {user.role === 'admin' && (
+                  <Link to="/admin/users" className="text-gray-600 hover:text-indigo-600">
+                    Boshqaruv
+                  </Link>
+                )}
                 <button
                   onClick={() => logout()}
                   className="rounded-lg px-3 py-1.5 text-sm text-red-500 hover:bg-red-50"
